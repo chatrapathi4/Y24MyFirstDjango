@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-=_sov*o)69cdf#(_*bs=#qb#5bz9^!6)a7usb_25p5@is(%(p&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['Y24FirstDjango-6008.onrender.com','127.0.0.1']
+ALLOWED_HOSTS = ['Y24FirstDjango-19.onrender.com','127.0.0.1']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add this line
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -116,9 +117,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+import os
+from pathlib import Path
 
-STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
+STATIC_URL = '/static/'
+
+# Static files directories for development
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# Static files root for production (where collectstatic puts files)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# WhiteNoise configuration
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
